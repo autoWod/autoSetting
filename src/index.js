@@ -1,14 +1,14 @@
 /*
- * @Description: 
+ * @Description: autoSetting
  * @Version: 1.0.0
  * @Author: lax
  * @Date: 2021-06-15 10:50:14
  * @LastEditors: lax
- * @LastEditTime: 2021-06-17 00:41:31
+ * @LastEditTime: 2021-06-17 00:58:30
  * @FilePath: \autoSetting\src\index.js
  */
 // ==UserScript==
-// @name         New Userscript
+// @name         autoSetting
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
 // @description  try to take over the world!
