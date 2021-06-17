@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2021-06-15 10:50:14
  * @LastEditors: lax
- * @LastEditTime: 2021-06-17 00:58:30
+ * @LastEditTime: 2021-06-17 08:45:45
  * @FilePath: \autoSetting\src\index.js
  */
 // ==UserScript==
@@ -13,7 +13,8 @@
 // @version      1.0.0
 // @description  try to take over the world!
 // @author       lax
-// @match        http://*.world-of-dungeons.org/wod/spiel/hero/skillconf_nojs.php?*
+// @match        http://*.world-of-dungeons.org/wod/spiel/hero/skillconf_nojs.php*
+// @match        http://*.world-of-dungeons.org/wod/spiel/hero/skillconfig.php*
 // @grant        none
 // ==/UserScript==
 
@@ -121,35 +122,63 @@
 	
 		})
 	}
+
+
+	// 设置区域
+	Array.from(document.querySelectorAll(".wod-list .wod-list-items")).map(each=>{
+		each.style.position = "relative";
+
+		const callback = function(mutationsList, observer) {
+			console.log("callback")
+			mutationsList.map(mutation=>{
+				if(mutation.type === "childList"){
+					listenerDrag(each);
+					console.log(mutation)
+				}
+			});
+		};
+		const observer = new MutationObserver(callback);
+		const config = { childList: true };
+
+
+		observer.observe(each, config);
+
+
+
+	});
+
+
 	let ing = null;
 
-	document.querySelector(".wod-list-items").style.position = "relative";
+	function listenerDrag(el){
+		console.log("@@")
 
-	const down = document.querySelector("img[title=向下]");
+		const down = el.parentNode.querySelector("img[title=向下]");
 
-	const up = document.querySelector("img[title=向上]");
-
-	Array.from(document.querySelectorAll(".wod-list-item")).map(each=>{
-		each.setAttribute("draggable","true"); 
+		const up = el.parentNode.querySelector("img[title=向上]");
 		
-		each.addEventListener("dragstart",e=>{
-			ing = e;
-		})
-		each.addEventListener("dragover",e=>{
-			e.preventDefault();
-			const target = e.target;
-			if (target.nodeName === "DIV"&& target.classList.contains("wod-list-item") && target !== ing.target) {
-				if(target.previousSibling === ing.target){
-				   console.log("向下")
-				   down.click();
-			    }
-			   else if(target.nextSibling === ing.target){
-					console.log("向上")
-					up.click();				
-				}
-			}
+		Array.from(el.querySelectorAll(".wod-list-item")).map(each=>{
 
-		})
-	})
+			each.setAttribute("draggable","true"); 
+			
+			each.addEventListener("dragstart",e=>{
+				ing = e;
+			});
+			each.addEventListener("dragover",e=>{
+				e.preventDefault();
+				const target = e.target;
+				if (target.nodeName === "DIV"&& target.classList.contains("wod-list-item") && target !== ing.target) {
+					if(target.previousSibling === ing.target){
+					   console.log("向下")
+					   down.click();
+					}
+				   else if(target.nextSibling === ing.target){
+						console.log("向上")
+						up.click();				
+					}
+				}	
+			});
+		});
+	}
 
 })();
