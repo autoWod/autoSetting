@@ -4,19 +4,20 @@
  * @Author: lax
  * @Date: 2020-10-10 17:07:52
  * @LastEditors: lax
- * @LastEditTime: 2021-05-17 19:49:03
+ * @LastEditTime: 2021-06-17 19:36:16
  */
 module.exports = {
 	root: true,
 	env: {
-		node: true
+		node: true,
+		es6: true
 	},
 	parserOptions: {
 		parser: "babel-eslint",
-		sourceType: "module"
+		ecmaVersion: 8
 	},
-	extends: ["plugin:vue/vue3-essential", "eslint:recommended", "@vue/prettier"],
-	// extends: ["airbnb-base/legacy","plugin:vue/essential","@vue/prettier"],
+	extends: ["airbnb-base/legacy", "plugin:prettier/recommended"],
+	plugins: ["prettier"],
 	rules: {
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -29,10 +30,16 @@ module.exports = {
 		"class-methods-use-this": "off",
 		"no-unused-expressions": "off",
 		"no-underscore-dangle": "off",
-		"no-else-return": "off"
+		"no-use-before-define": "off",
+		"no-else-return": "off",
+		"no-alert": "off",
+		camelcase: "off",
+		strict: "off"
 	},
 	globals: {
-		logger: true
+		logger: true,
+		XmlSerializer: true,
+		base64_encode: true
 	},
 	overrides: [
 		{
